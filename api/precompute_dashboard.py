@@ -22,7 +22,7 @@ import jrc_common.jrc_common as JRC
 # pylint: disable=no-member, R1710, W1401, E0602
 # pylint: disable=C0302,C0103,W0703
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 app = Flask(__name__, template_folder='templates')
 app.config.from_pyfile("config.cfg")
 CORS(app)
@@ -742,6 +742,8 @@ def get_published_versioned(pname):
         return "", ""
     html = f"<br><div class='hr-with-text'><span>DynamoDB {tbl}</span></div>"
     html += "<h5>Body IDs</h5>"
+    if not rec:
+        return f"<span style='color: red'>{pname} was not found in {tbl}</span><br>", ""
     for row in rec:
         if not name:
             name = row['name']
