@@ -409,6 +409,8 @@ def show_emb(ival, itype='Body ID'):
         for field in ['neuronType', 'neuronInstance', 'status', 'statusLabel', 'dataSetIdentifier']:
             if field not in row:
                 row[field] = ''
+            if field == 'neuronType' and not row[field] and 'terms' in row and row['terms']:
+                row[field] = ', '.join(row['terms'])
         html += "<tr><td>" + '</td><td>'.join([row[header] for header in headers]) + "</td></tr>"
     html += "</tbody></table>"
     return html
@@ -472,6 +474,8 @@ def show_nmd_purl(ival, itype='Slide code', table='neuronMetadata'):
         for col in ['sourceRefId', 'neuronType', 'neuronInstance']:
             if col not in row:
                 row[col] = ''
+            if col == 'neuronType' and not row[col] and 'neuronTerms' in row and row['neuronTerms']:
+                row[col] = ', '.join(row['neuronTerms'])
         if 'datasetLabels' in row:
             row['datasetLabels'] = ', '.join(row['datasetLabels'])
         else:
@@ -995,7 +999,8 @@ def run_search(key, stype='Publishing name'):
         return render_template('error.html', urlroot=request.url_root,
                                title=f"Invalid {stype}",
                                message=f"{key} is not a valid {stype}")
-    if stype in ('Publishing name', 'Slide code', 'Neuron type', 'Neuron instance') and key.isdigit():
+    if stype in ('Publishing name', 'Slide code', 'Neuron type',
+                 'Neuron instance') and key.isdigit():
         return render_template('error.html', urlroot=request.url_root,
                                title=f"Invalid {stype}",
                                message=f"{key} is not a valid {stype}")
