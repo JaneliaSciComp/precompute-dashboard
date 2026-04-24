@@ -1,0 +1,47 @@
+{
+  "role_arn": "arn:aws:iam::675037355837:role/FlyLightPDSAdmin",
+  "s3_bucket": {
+    "line": "janelia-flylight-imagery",
+    "cdm": "janelia-flylight-color-depth",
+    "cdm-thumbnail": "janelia-flylight-color-depth-thumbnails",
+    "ppp": "janelia-ppp-match"
+  },
+  "base_aws_url": "https://s3.amazonaws.com",
+  "athena": {
+    "janelia-neuronbridge-logs": {
+      "athena_bucket": "janelia-neuronbridge-logs-query",
+      "database": "s3_neuronbridge_access_logs_db",
+      "athena_path": "temp/athena/output",
+      "kafka_topic": "janelia_neuronbridge_logs_athena",
+      "es_index": "aws_neuronbridge_index-*"
+    },
+    "janelia-flylight-logs": {
+      "athena_bucket": "janelia-flylight-logs-query",
+      "database": "s3_flylight_access_logs_db",
+      "athena_path": "temp/athena/output",
+      "kafka_topic": "janelia_flylight_logs_athena",
+      "es_index": "aws_flylight_index-*"
+    },
+    "janelia-flylight-int-logs": {
+      "athena_bucket": "janelia-flylight-int-logs-query",
+      "database": "s3_flylight_int_access_logs_db",
+      "athena_path": "temp/athena/output",
+      "kafka_topic": "janelia_flylight_logs_athena",
+      "es_index": "aws_flylight_index-*"
+    },
+    "janelia-cosem-logs": {
+      "athena_bucket": "janelia-cosem-logs-query",
+      "database": "s3_cosem_access_logs_db",
+      "athena_path": "temp/athena/output",
+      "kafka_topic": "janelia_cosem_logs_athena",
+      "es_index": "aws_cosem_index-*"
+    },
+    "janelia-openorganelle-web-prod-logs": {
+      "athena_bucket": "janelia-organelle-logs-query",
+      "database": "s3_organelle_access_logs_db",
+      "athena_path": "temp/athena/output",
+      "kafka_topic": "janelia_organelle_logs_athena",
+      "es_index": "aws_organelle_index-*"
+    }
+  }
+}

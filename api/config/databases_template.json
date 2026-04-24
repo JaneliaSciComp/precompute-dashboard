@@ -1,0 +1,30 @@
+{
+  "jacs": {
+    "prod": {
+      "read": {
+        "authentication": true,
+        "client": "jacs",
+        "host": "jacs-mongodb1.int.janelia.org:27017,jacs-mongodb2.int.janelia.org:27017,jacs-mongodb3.int.janelia.org",
+        "name": "JACS MongoDB",
+        "password": "**********",
+        "replicaset": "rsProd",
+        "type": "mongo",
+        "user": "prodRead"
+      }
+    }
+  },
+  "neuronbridge": {
+    "prod": {
+      "read": {
+        "authentication": true,
+        "authsource": "neuronbridge",
+        "client": "neuronbridge",
+        "host": "nb-mongodb.int.janelia.org",
+        "name": "NeuronBridge MongoDB",
+        "password": "**********",
+        "type": "mongo",
+        "user": "nbro"
+      }
+    }
+  }
+}

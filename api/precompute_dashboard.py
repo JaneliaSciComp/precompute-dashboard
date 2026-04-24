@@ -1,14 +1,17 @@
 ''' precompute_dashboard.py
     NeuronBridge precompute dashboard
 '''
+# PATCHED: Configurator dependency removed - loads config from local /config/*.json files
 
 from datetime import timedelta
 import inspect
+import json
 from operator import attrgetter
 import os
 import re
 import sys
 from time import time
+from types import SimpleNamespace
 import traceback
 import boto3
 import botocore
@@ -17,6 +20,16 @@ from flask import (Flask, make_response, render_template, request, jsonify)
 from flask_cors import CORS
 import pymongo
 import jrc_common.jrc_common as JRC
+
+
+def _load_config_ns(name):
+    """Load config as SimpleNamespace (replaces JRC.get_config)"""
+    config_path = os.path.join('/config', f'{name}.json')
+    if not os.path.exists(config_path):
+        config_path = os.path.join('config', f'{name}.json')
+    with open(config_path) as f:
+        data = json.load(f)
+    return json.loads(json.dumps(data), object_hook=lambda d: SimpleNamespace(**d))
 
 
 # pylint: disable=no-member, R1710, W1401, E0602
@@ -58,7 +71,8 @@ def before_request():
     # pylint: disable=W0603
     if "neuronbridge" not in DB:
         try:
-            dbconfig = JRC.get_config("databases")
+            # PATCHED: Load from local config file instead of configurator
+            dbconfig = _load_config_ns("databases")
         except Exception as err: # pragma: no cover
             temp = "{2}: An exception of type {0} occurred. Arguments:\n{1!r}"
             mess = temp.format(type(err).__name__, err.args, inspect.stack()[0][3])
@@ -86,7 +100,8 @@ def before_request():
                                    title='Could not connect to DynamoDB',
                                    message=mess)
     try:
-        aws = JRC.get_config("aws")
+        # PATCHED: Load from local config file instead of configurator
+        aws = _load_config_ns("aws")
     except Exception as err:
         temp = "{2}: An exception of type {0} occurred. Arguments:\n{1!r}"
         mess = temp.format(type(err).__name__, err.args, inspect.stack()[0][3])
