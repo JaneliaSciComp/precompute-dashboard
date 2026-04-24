@@ -35,7 +35,7 @@ def _load_config_ns(name):
 # pylint: disable=no-member, R1710, W1401, E0602
 # pylint: disable=C0302,C0103,W0703
 
-__version__ = '1.1.0'
+__version__ = '2.0.0'
 app = Flask(__name__, template_folder='templates')
 app.config.from_pyfile("config.cfg")
 CORS(app)
